@@ -1,4 +1,6 @@
 const express = require('express')
+const Mongoose = require('mongoose')
+const Bread = require('./models/bread')
 
 // CONFIGURATION
 require('dotenv').config()
@@ -20,6 +22,7 @@ app.get('/', (req, res) => {
 
 // Breads
 const breadsController = require('./controllers/breads_controller.js')
+const { default: mongoose } = require('mongoose')
 app.use('/breads', breadsController)
 
 // 404 Page
@@ -30,4 +33,8 @@ app.get('*', (req, res) => {
 // LISTEN
 app.listen(PORT, () => {
     console.log(`Server listening at ${PORT}`)
+})
+
+Mongoose.connect(process.env.MONGO_URI, () => {
+    console.log('MongoDB Connected')
 })
